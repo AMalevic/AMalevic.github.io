@@ -13,10 +13,9 @@
         }
 
         #sidebar {
-            width: 220px; /* увеличим ширину сайд-бара */
+            width: 200px; /* уменьшим ширину сайд-бара */
             background-color: #3498db; /* сделаем его ярче */
-            padding: 20px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 5px 0px 5px rgba(0, 0, 0, 0.1), -5px 0px 5px rgba(0, 0, 0, 0.1); /* добавим тень справа и слева */
         }
 
         #content {
@@ -39,23 +38,26 @@
             color: #ecf0f1; /* светлый цвет текста */
             display: block;
             padding: 8px; /* добавим немного отступов */
-            transition: color 0.3s, background-color 0.3s; /* добавим плавные переходы для цвета текста и фона */
+            transition: color 0.3s, background-color 0.3s, box-shadow 0.3s; /* добавим плавные переходы для цвета текста, фона и тени */
         }
 
         ul li a:hover {
             color: #2c3e50; /* изменяем цвет текста при наведении */
             background-color: #ecf0f1; /* изменяем фон при наведении */
+            box-shadow: 5px 0px 5px rgba(0, 0, 0, 0.2), -5px 0px 5px rgba(0, 0, 0, 0.2); /* добавим тень при наведении */
         }
 
         ul li a:active {
             color: #34495e; /* изменяем цвет текста при нажатии */
             background-color: #bdc3c7; /* изменяем фон при нажатии */
+            box-shadow: none; /* убираем тень при нажатии */
         }
 
         ul li a.active {
             font-weight: bold;
-            color: #2c3e50; /* цвет для активной статьи */
+            color: #e67e22; /* цвет для активной статьи */
             background-color: #ecf0f1; /* фон для активной статьи */
+            box-shadow: 5px 0px 5px rgba(0, 0, 0, 0.2), -5px 0px 5px rgba(0, 0, 0, 0.2); /* добавим тень для активной статьи */
         }
 
         ul li ul {
@@ -151,7 +153,7 @@
             });
 
             // Load the default article on page load
-            loadArticle('article-1-1');
+            loadArticle('article-1');
         });
     </script>
 
