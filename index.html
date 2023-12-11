@@ -13,8 +13,8 @@
         }
 
         #sidebar {
-            width: 200px;
-            background-color: #f4f4f4;
+            width: 220px; /* увеличим ширину сайд-бара */
+            background-color: #3498db; /* сделаем его ярче */
             padding: 20px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
@@ -36,22 +36,36 @@
 
         ul li a {
             text-decoration: none;
-            color: #333;
+            color: #ecf0f1; /* светлый цвет текста */
             display: block;
-            transition: color 0.3s; /* добавим плавный переход для цвета текста */
+            padding: 8px; /* добавим немного отступов */
+            transition: color 0.3s, background-color 0.3s; /* добавим плавные переходы для цвета текста и фона */
         }
 
         ul li a:hover {
-            color: #555; /* изменяем цвет при наведении */
+            color: #2c3e50; /* изменяем цвет текста при наведении */
+            background-color: #ecf0f1; /* изменяем фон при наведении */
         }
 
         ul li a:active {
-            color: #777; /* изменяем цвет при нажатии */
+            color: #34495e; /* изменяем цвет текста при нажатии */
+            background-color: #bdc3c7; /* изменяем фон при нажатии */
         }
 
         ul li a.active {
-            font-weight: bold; /* делаем активную статью жирным шрифтом */
-            color: #007bff; /* цвет для активной статьи */
+            font-weight: bold;
+            color: #2c3e50; /* цвет для активной статьи */
+            background-color: #ecf0f1; /* фон для активной статьи */
+        }
+
+        ul li ul {
+            margin-top: 5px;
+            margin-left: 15px;
+            display: none; /* начально скрываем вложенные списки */
+        }
+
+        ul li.active ul {
+            display: block; /* показываем вложенный список, если его родитель активен */
         }
     </style>
 </head>
@@ -83,6 +97,25 @@
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             var sectionLinks = document.querySelectorAll('.section');
+
+            function toggleAccordion(e) {
+                e.preventDefault();
+                var isActive = this.parentElement.classList.contains('active');
+
+                sectionLinks.forEach(function (link) {
+                    link.parentElement.classList.remove('active');
+                });
+
+                if (!isActive) {
+                    this.parentElement.classList.add('active');
+                }
+            }
+
+            sectionLinks.forEach(function (link) {
+                link.addEventListener('click', toggleAccordion);
+            });
+
+            var sectionLinks = document.querySelectorAll('.section');
             var topicLinks = document.querySelectorAll('.topic');
             var contentContainer = document.getElementById('content');
 
@@ -105,6 +138,12 @@
                 e.preventDefault();
                 var targetArticleId = e.target.getAttribute('data-article');
                 loadArticle(targetArticleId);
+
+                sectionLinks.forEach(function (link) {
+                    link.classList.remove('active');
+                });
+
+                e.target.classList.add('active');
             }
 
             sectionLinks.forEach(function (link) {
