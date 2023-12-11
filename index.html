@@ -1,16 +1,123 @@
 <!DOCTYPE html>
-<html lang="ru" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="x-ua-compatible" content="IE=edge">
-    <link rel="stylesheet" href="/css/style.css">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Локальная Документация</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
 
-    <title>Alexsey Malevik - Portfolio</title>
-  </head>
-  <body>
-    <header class="header">
-      <h1>header</h1>
-    </header>
-  </body>
+        #sidebar {
+            width: 200px;
+            background-color: #f4f4f4;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        #content {
+            flex: 1;
+            padding: 20px;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        ul li {
+            margin-bottom: 10px;
+        }
+
+        ul li a {
+            text-decoration: none;
+            color: #333;
+            display: block;
+        }
+
+        ul li ul {
+            margin-top: 5px;
+            margin-left: 15px;
+        }
+
+        article {
+            display: none;
+        }
+
+        article.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="sidebar">
+        <ul>
+            <li>
+                <a href="#" class="section" data-article="article-1">Раздел 1</a>
+                <ul>
+                    <li><a href="#" class="topic" data-article="article-1-1">Тема 1.1</a></li>
+                    <li><a href="#" class="topic" data-article="article-1-2">Тема 1.2</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#" class="section" data-article="article-2">Раздел 2</a>
+                <ul>
+                    <li><a href="#" class="topic" data-article="article-2-1">Тема 2.1</a></li>
+                    <li><a href="#" class="topic" data-article="article-2-2">Тема 2.2</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <div id="content">
+        <!-- Articles will be loaded here -->
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var sectionLinks = document.querySelectorAll('.section');
+            var topicLinks = document.querySelectorAll('.topic');
+            var contentContainer = document.getElementById('content');
+
+            function loadArticle(articleId) {
+                var xhr = new XMLHttpRequest();
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === XMLHttpRequest.DONE) {
+                        if (xhr.status === 200) {
+                            contentContainer.innerHTML = xhr.responseText;
+                        } else {
+                            console.error('Failed to load article');
+                        }
+                    }
+                };
+                xhr.open('GET', articleId + '.html', true);
+                xhr.send();
+            }
+
+            function setActiveArticle(e) {
+                e.preventDefault();
+                var targetArticleId = e.target.getAttribute('data-article');
+                loadArticle(targetArticleId);
+            }
+
+            sectionLinks.forEach(function (link) {
+                link.addEventListener('click', setActiveArticle);
+            });
+
+            topicLinks.forEach(function (link) {
+                link.addEventListener('click', setActiveArticle);
+            });
+
+            // Load the default article on page load
+            loadArticle('article-1');
+        });
+    </script>
+
+</body>
 </html>
